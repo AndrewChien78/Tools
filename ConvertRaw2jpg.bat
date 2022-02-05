@@ -10,13 +10,17 @@ SET subdir2=%photodir%\jpg_sm
 MD "%subdir1%"
 MD "%subdir2%"
 SET /a counterVar=1
-FOR %%y IN (*.raw *.pef) DO 
+setlocal ENABLEDELAYEDEXPANSION
+
+FOR %%f IN (*.raw *.pef) DO 
 	(
 	raw2jpg -i %y -o '%subdir2%' --width=1920 --height=1080 --keep-aspect-ratio
-	counterVar=counterVar+1 
+	SET /a counterVar=counterVar+1 
 	TIMEOUT 2 /NOBREAK
-	echo %counter%
+	echo !counterVar!
 	)
+
+endlocal
 
 :: References
 :: For Loop Counter
